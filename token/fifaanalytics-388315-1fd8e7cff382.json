@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "fifaanalytics-388315",
+  "private_key_id": "1fd8e7cff382fe599e46cd6250365b250894925a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC6r/HNmSdSQl8s\nDknei6faKv9flzN3LM30wF2VffbCMNBPhHpEcDUP1A1VQJpBAHiyxPNBWPxf1rvh\nGQQaRNdGb9v/M4kRMzreZp+TmjYz+zqXEJHO7EvWwF+GC3UR2htjuVma901FQq4x\njiP2DocYSO7hSk1ESPlQGo0O5TRqYG5ru7z2iIUqxnRJpYihBfbp0jtotz1pBtAE\nrK6Q1kv/Cj6HxJCIpn7Ii23Vs1PfVXLLSLgn+yLQPzo+2LrVkTnkof0ChNRfI84P\ni2HIenR00DEqK7ZDp1BVd1tpq1iDycxkWduUbs/BSvsRE8lHFpy0JEmfRgiwI2r7\nsPSADBp/AgMBAAECggEAQgI5ELWw4hSGuziYJOCjanAemKmJMH++mOY1kMiXqeUB\nmsQgSTeVg3G6fyTXBdnJU4hw7G+u2KJADyC9wx4JMiYWFv+dXOAM1htaHCIAPVP8\nzPI2ZABH9nhRrj851yST36hnRvRfNXiUx//Wtkc/vDX5hN41QMo+oPSqYJRpepzg\nKdArzVmFIPIvQ329Al9BlHHzaB6wPYH8R7bwdZHojrahzlkjUp6GJQG8oIT5LMOY\nQXRKAxvjMcBHTZ2R938IBa99O3MHpYWxXD0LDoUEgr+13ip4cZI3V97GnE3sdjoE\n4BNP/MlFuFjO7OvcklNSj0vJRI/yDMu6+Z1k0BRi4QKBgQDp//Haq2h0pxZhlyzK\nkKAjPjGeUUm47gUwuFZG3iMn6F6ouYBGLLuTtbhRjxi7+3Vx4HtHUWHMKWX6xlWN\nHedmDA2Sdcn8Tp9vBLKolDt7CGXcpCg9sfXreXsolWPFk1oVXE1+6Vr7rtv7DVQa\noVwZv8SD6Nb2JSVatbAgu4CMnwKBgQDMPUCk5t7VlkWZhRUo2UXfS7euwBLUWMdI\nR5y80GLVsCWKB3uXvpc9sUgH8J0ruH5keji/C5K+yOGIc8TVW7E8FqwrXorlfgW+\nxqJmNV3TB7yAMiig17SITfTHwr8n0fp6GPRcRPvh+VxdhNB/KESV30wKZxI9B31x\n1hkmNenGIQKBgGr5yI6oeBuEW5YH78E3dw5Fm5d+IA78OcE5NLA3U6kl8Uh/baYn\nQyXXGMmoeq1N2zZRYuqKyQP2FRodW/Ukq6oaboX7dXj0VK0DX83z3nFzuGWzYnY6\nCmw5YFWAXllv8On9Bay0cBTJruXKBR4bkKhw5B1N8CAdgUND9p4wOiePAoGBAMgU\n/Z5OmmCtvXNfP9JrwBq357NncUrbyibSGQeUMi7bSHtHR1nqGeoTIdi9bIvnStMO\nNUdbhCApVWDC4UKPeDrAj1xRW0rlwaUanP/6KfdR7eW8vbaMeszJahLEg1X0TCiP\nB9zYq9W93zGyqjrX7RDR14GdZe2px8fckXiwelthAoGBAIkEGD5RnEA5WMjdoZTH\nFLkkpCnnljOkHhs9KVOYS9ai0ztuaKTcUibEsB+J34A2acECsVUiAZHOxftYaftN\nXBeCK2dGUF7RFZ3YvvzaEg7n/Z4zLkyAvOdW8Vk7GvsV6LPj7iJXvozqk5XqES37\nxmU8ry/wBKV5ny2zJBn5JK7p\n-----END PRIVATE KEY-----\n",
+  "client_email": "fifa-227@fifaanalytics-388315.iam.gserviceaccount.com",
+  "client_id": "110826783715335802651",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fifa-227%40fifaanalytics-388315.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
