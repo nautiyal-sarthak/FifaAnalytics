@@ -14,10 +14,10 @@ def createDatafrme(formatedList):
     df = pd.DataFrame(formatedList)
 
     # Extract time component into a separate column
-    df['Time'] = pd.to_datetime(df['Date']).dt.hour
+    df['Time'] = pd.to_datetime(df['Timestamp']).dt.hour
 
     # Convert 'DateTime' column to datetime type
-    df['Date'] = pd.to_datetime(df['Date']).dt.date
+    df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
 
 
 
@@ -28,6 +28,9 @@ if __name__ == "__main__":
     formatedList = read_google_sheet()
     #create a dataframe
     df = createDatafrme(formatedList)
-    print(df.head(1))
+    print(df)
 
     #Prepare the dashboard
+    st.title("FifaAnalytics")
+
+    # 1.
