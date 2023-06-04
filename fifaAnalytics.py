@@ -20,10 +20,6 @@ def createDatafrme(formatedList):
     # Convert 'DateTime' column to datetime type
     df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
 
-    #spliting the goal feids
-    df['Time'] = pd.to_datetime(df['Timestamp']).dt.hour
-
-
 
     return df
 
