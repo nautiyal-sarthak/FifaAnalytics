@@ -13,11 +13,15 @@ def read_google_sheet():
 def createDatafrme(formatedList):
     df = pd.DataFrame(formatedList)
 
+    #formating date feilds
     # Extract time component into a separate column
     df['Time'] = pd.to_datetime(df['Timestamp']).dt.hour
 
     # Convert 'DateTime' column to datetime type
     df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
+
+    #spliting the goal feids
+    df['Time'] = pd.to_datetime(df['Timestamp']).dt.hour
 
 
 
