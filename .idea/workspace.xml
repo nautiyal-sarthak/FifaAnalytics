@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f6ab623-1023-4c54-8529-1543a07f0e7c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fifaAnalytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/fifaAnalytics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,11 +14,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fifaAnalytics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+            <state relative-caret-position="69">
+              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#117#290#0" />
+                <element signature="e#323#613#0" />
+                <element signature="e#638#687#0" />
                 <element signature="e#628#680#0" />
+                <element signature="e#730#792#0" />
+                <element signature="e#1169#1222#0" />
+                <element signature="e#1334#1534#0" />
+                <element signature="e#1526#1688#0" />
+                <element signature="e#1771#2857#0" />
+                <element signature="e#2889#3014#0" />
+                <marker date="1686332759380" expanded="true" signature="3840:4049" ph="..." />
               </folding>
             </state>
           </provider>
@@ -34,6 +42,18 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>getGoals</find>
+      <find>Total Wins</find>
+      <find>avg_goals_per_game</find>
+      <find>set_page_config</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>total_wins</replace>
+      <replace>goals/game</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -144,19 +164,19 @@
     <frame x="0" y="25" width="1440" height="788" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.36956522" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.18115942" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.17971015" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.43623188" />
-      <window_info anchor="bottom" id="Python Console" order="9" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.22608696" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.3289855" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -195,6 +215,76 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/fifaAnalytics.py</url>
+          <line>118</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/fifaAnalytics.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/fifaAnalytics.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>grpGoals.reset_index()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>grpGoals.resetIndex()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allGoalsDf.groupby(['Player', 'Date'])['Goals'].sum()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>print(allGoalsDf.info())</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allGoalsDf.info()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allGoalsDf.groupby(['Player', 'Date']).sum()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allGoalsDf.groupby(['Player', 'Date']).sum('Goals')</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allGoalsDf.groupby(['Player', 'Date']).sum(['Goals'])</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>allGoalsDf.groupby(['Player', 'Date']).sum(['Goals'])['Goals']</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -210,13 +300,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/python3.9/site-packages/pandas/core/indexes/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="3362" selection-start-line="3362" selection-end-line="3362" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.9/site-packages/pandas/core/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="605">
+          <caret line="530" selection-start-line="530" selection-end-line="530" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.9/site-packages/pandas/core/groupby/groupby.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="910" selection-start-line="910" selection-end-line="910" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fifaAnalytics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+        <state relative-caret-position="69">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#117#290#0" />
+            <element signature="e#323#613#0" />
+            <element signature="e#638#687#0" />
             <element signature="e#628#680#0" />
+            <element signature="e#730#792#0" />
+            <element signature="e#1169#1222#0" />
+            <element signature="e#1334#1534#0" />
+            <element signature="e#1526#1688#0" />
+            <element signature="e#1771#2857#0" />
+            <element signature="e#2889#3014#0" />
+            <marker date="1686332759380" expanded="true" signature="3840:4049" ph="..." />
           </folding>
         </state>
       </provider>
