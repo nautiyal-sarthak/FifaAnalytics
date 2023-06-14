@@ -143,6 +143,6 @@ validators==0.20.0
 visions==0.7.5
 w3lib==1.22.0
 Werkzeug==2.1.1
-ydata-profiling==4.0.0
+ydata-profiling
 zipp==3.8.0
 zope.interface==5.4.0
