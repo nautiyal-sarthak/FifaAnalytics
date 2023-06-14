@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import gspread
+import datetime
+from streamlit_plotly_events import plotly_events
 
 
 def read_google_sheet():
@@ -63,11 +65,29 @@ def getGoalsPieAndTrend(df):
 
     return pie_fig , trend_fig
 
+def getResult(score,perspective):
+    src_lst = score.split('-')
+    result = "Tie"
+
+    if perspective == 'home':
+        if src_lst[0] > src_lst[1]:
+            result = "Won"
+        elif src_lst[1] > src_lst[0]:
+            result = "Lost"
+
+    elif perspective == 'away':
+        if src_lst[0] > src_lst[1]:
+            result = "Lost"
+        elif src_lst[1] > src_lst[0]:
+            result = "Won"
+
+    return result
+
 def getGoals(df):
     homeDF = df[['Timestamp','Date','Home team','Home player','fulltime score']]
     homeDF['GoalsScored'] = [x[0] for x in homeDF['fulltime score'].str.split("-")]
     homeDF['GoalsConceded'] = [x[1] for x in homeDF['fulltime score'].str.split("-")]
-    homeDF['Result'] = ["Won" if int(x[0]) > int(x[1]) else "Lost"  for x in homeDF['fulltime score'].str.split("-")]
+    homeDF['Result'] = homeDF['fulltime score'].apply(getResult, args=('home',))
     homeDF['stadium'] = 'Home'
     homeDF = homeDF.rename({'Home team': 'Team', 'Home player': 'Player'}, axis=1)
 
@@ -75,7 +95,7 @@ def getGoals(df):
     awayDF = df[['Timestamp','Date','Away team', 'Away player', 'fulltime score']]
     awayDF['GoalsScored'] = [x[1] for x in awayDF['fulltime score'].str.split("-")]
     awayDF['GoalsConceded'] = [x[0] for x in awayDF['fulltime score'].str.split("-")]
-    awayDF['Result'] = ["Won" if int(x[1]) > int(x[0]) else "Lost" for x in awayDF['fulltime score'].str.split("-")]
+    awayDF['Result'] = awayDF['fulltime score'].apply(getResult, args=('away',))
     awayDF['stadium'] = 'Away'
     awayDF = awayDF.rename({'Away team': 'Team', 'Away player': 'Player'}, axis=1)
 
@@ -106,12 +126,23 @@ if __name__ == "__main__":
 
 
     fig1 , fig2 = getPieAndTrend(getWins(formatedDf))
-    mygrid = make_grid(2, 2)
+    mygrid = make_grid(3,2)
 
     mygrid[0][0].header("Wins Analysis")
-    mygrid[1][0].plotly_chart(fig1)
-    mygrid[1][1].plotly_chart(fig2)
 
+    mygrid[1][0].plotly_chart(fig1)
+
+    with mygrid[1][1] :
+        selected_points = plotly_events(fig2)
+
+    if (selected_points):
+        a = selected_points[0]
+        st.text("Match Results for " + a['x'])
+        dt_lst = str(a['x']).split('-')
+        st.dataframe(
+            formatedDf[formatedDf['Date'] == datetime.date(int(dt_lst[0]), int(dt_lst[1]), int(dt_lst[2]))].drop('Time',
+                                                                                                                 axis=1).drop(
+                'Date', axis=1))
 
     allGoalsDf = getGoals(formatedDf)
     grpGoals = allGoalsDf.groupby(['Player', 'Date'])['GoalsScored'].sum().reset_index()
@@ -149,6 +180,9 @@ if __name__ == "__main__":
                             "GoalsConceded":"Total Goals Conceded"})
 
         statsDF["total_wins"] = statsDF['Result'].apply(lambda x: x.count("Won"))
+        statsDF["total_tie"] = statsDF['Result'].apply(lambda x: x.count("Tie"))
+        statsDF["total_lost"] = statsDF['Result'].apply(lambda x: x.count("Lost"))
+
         statsDF["win%"] = (statsDF['total_wins']/statsDF['total_games']) * 100
         statsDF["goal_diff"] = statsDF['total_goals_scored'] - statsDF['Total Goals Conceded']
 
@@ -157,28 +191,29 @@ if __name__ == "__main__":
         statsDF['weighted_win%'] = statsDF['win%'] * statsDF['total_games']
         statsDF['factor'] = statsDF["win%"] + (statsDF['weighted_win%'])
 
-        statsDF['factor'] = (statsDF['total_games'] * 1.5 * statsDF["total_wins"])/((statsDF['total_games'] - statsDF["total_wins"])+1)
+        statsDF['factor'] = (statsDF['total_games'] +  ((statsDF["total_wins"]) * 1.5) +
+                             ((statsDF['total_lost']) * -2.5) + ((statsDF['total_tie']) * 1))
 
 
         statsDF["Recent Form"] = statsDF['Result'].apply(lambda x: x[:5])
 
 
-        statsDF = statsDF[['stadium','factor','Team','total_games','total_wins','goal_diff','win%','goals/game','Recent Form']]
+        statsDF = statsDF[['stadium','factor','Team','total_games','total_lost','total_tie','total_wins','goal_diff','win%','goals/game','Recent Form']]
 
 
 
         homeDf = statsDF[statsDF['stadium']=='Home']
-        homeDf = homeDf[['Team','total_games','total_wins','goal_diff','win%','goals/game','Recent Form','factor']]
+        homeDf = homeDf[['Team', 'total_games', 'total_wins','total_lost','total_tie', 'goal_diff', 'win%', 'goals/game', 'Recent Form','factor']]
 
         awayDf = statsDF[statsDF['stadium'] == 'Away']
         awayDf = awayDf[
-            ['Team', 'total_games', 'total_wins', 'goal_diff', 'win%', 'goals/game', 'Recent Form','factor']]
+            ['Team', 'total_games', 'total_wins','total_lost','total_tie', 'goal_diff', 'win%', 'goals/game', 'Recent Form','factor']]
 
         if not homeDf.empty :
             #best Home team
             st.subheader("Best Home Team")
 
-            sorted_teams = homeDf.sort_values(by=['factor','win%'],
+            sorted_teams = homeDf.sort_values(by=['factor','goals/game'],
                                                  ascending=[False,False])
 
 
@@ -187,7 +222,7 @@ if __name__ == "__main__":
 
             #wort Home team
             st.subheader("Worst Home Team")
-            sorted_teams = homeDf.sort_values(by=['factor','win%'],
+            sorted_teams = homeDf.sort_values(by=['factor','goals/game'],
                                               ascending=[True,True])
 
             st.dataframe(sorted_teams.iloc[0:3])
@@ -195,7 +230,7 @@ if __name__ == "__main__":
         if not awayDf.empty:
             #best Away team
             st.subheader("Best Away Team")
-            sorted_teams = awayDf.sort_values(by=['factor','win%'],
+            sorted_teams = awayDf.sort_values(by=['factor','goals/game'],
                                               ascending=[False,False])
 
             st.dataframe(sorted_teams.iloc[0:3])
@@ -203,7 +238,7 @@ if __name__ == "__main__":
 
             #worst Home team
             st.subheader("Worst Away Team")
-            sorted_teams = awayDf.sort_values(by=['factor','win%'],
+            sorted_teams = awayDf.sort_values(by=['factor','goals/game'],
                                               ascending=[True,True])
 
             st.dataframe(sorted_teams.iloc[0:3])
