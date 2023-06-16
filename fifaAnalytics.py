@@ -33,6 +33,19 @@ def getWinner(score,p1,p2):
 
     return winner
 
+
+def isCleanSheet(score):
+    flag = 0
+    if '0-0' not in score :
+        scorelst = score.split("-")
+
+        if '0' in scorelst:
+            flag = 1
+
+    return flag
+
+
+
 def createDatafrme(formatedList):
     df = pd.DataFrame(formatedList)
     return df
@@ -43,6 +56,8 @@ def formatDataframe(df):
 
     #get the winner
     df['winner'] = df.apply(lambda row: getWinner(row['fulltime score'], row['Home player'], row['Away player']), axis=1)
+    df['is_cleansheet'] = df.apply(lambda row: isCleanSheet(row['fulltime score']),
+                            axis=1)
 
     return df
 
@@ -147,6 +162,21 @@ if __name__ == "__main__":
     allGoalsDf = getGoals(formatedDf)
     grpGoals = allGoalsDf.groupby(['Player', 'Date'])['GoalsScored'].sum().reset_index()
 
+    mygrid3 = make_grid(2, 2)
+    mygrid3[0][0].header("Clean sheets")
+
+    cleansheet = formatedDf.groupby(['winner']).sum('is_cleansheet').reset_index() \
+        .rename(columns={"is_cleansheet": "cleansheet"})
+
+    cleansheet = cleansheet[cleansheet['winner'] != 'Tied']
+
+    cleansheet_fig = px.pie(cleansheet, values='cleansheet', names='winner')
+
+    mygrid3[1][0].plotly_chart(cleansheet_fig)
+    filterdf = formatedDf[formatedDf['is_cleansheet'] == 1]
+    mygrid3[1][1].dataframe(filterdf[['Home team','Away team','Home player','Away player','fulltime score','winner']])
+
+
     fig3, fig4 = getGoalsPieAndTrend(grpGoals)
     mygrid2 = make_grid(2, 2)
 
@@ -155,17 +185,15 @@ if __name__ == "__main__":
     mygrid2[1][1].plotly_chart(fig4)
 
 
-    # goalsTrend = allGoalsDf.groupby(['Player', 'Timestamp'])['GoalsScored'].sum().reset_index()
-    # trend_fig = px.bar(goalsTrend, x="Timestamp", y="GoalsScored", color='Player')
-    # st.plotly_chart(trend_fig)
-
-
     st.title("Player analysis")
     option = st.selectbox('Select a player',set(allGoalsDf['Player']))
 
     if option != "" :
 
         selPlayerdf = allGoalsDf[allGoalsDf["Player"]==option]
+
+
+        st.dataframe(selPlayerdf)
 
         statsDF = selPlayerdf.groupby(['stadium','Team',])\
             .agg(
@@ -178,6 +206,9 @@ if __name__ == "__main__":
             .rename(columns={"Date":"total_games",
                             "GoalsScored":"total_goals_scored",
                             "GoalsConceded":"Total Goals Conceded"})
+
+
+
 
         statsDF["total_wins"] = statsDF['Result'].apply(lambda x: x.count("Won"))
         statsDF["total_tie"] = statsDF['Result'].apply(lambda x: x.count("Tie"))
