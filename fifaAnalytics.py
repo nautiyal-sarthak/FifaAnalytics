@@ -4,6 +4,7 @@ import plotly.express as px
 import gspread
 import datetime
 from streamlit_plotly_events import plotly_events
+import plotly.graph_objects as go
 
 
 def read_google_sheet():
@@ -70,6 +71,7 @@ def getPieAndTrend(df):
     pie_fig = px.pie(df, values='Wins', names='winner')
 
     trend_fig = px.bar(df, x="Date", y="Wins", color='winner',barmode="group")
+    #trend_fig = go.Scatter(x=df['Date'], y=df['Wins'], line_shape='spline')
 
     return pie_fig , trend_fig
 
@@ -130,6 +132,18 @@ def make_grid(cols,rows):
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
+
+    page_bg_img = '''
+        <style>
+        body {
+        background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
+        background-size: cover;
+        }
+        </style>
+        '''
+
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+
     # read the details from the google sheet
     formatedList = read_google_sheet()
     #create a dataframe
@@ -142,6 +156,8 @@ if __name__ == "__main__":
 
     fig1 , fig2 = getPieAndTrend(getWins(formatedDf))
     mygrid = make_grid(3,2)
+
+
 
     mygrid[0][0].header("Wins Analysis")
 
@@ -174,7 +190,7 @@ if __name__ == "__main__":
 
     mygrid3[1][0].plotly_chart(cleansheet_fig)
     filterdf = formatedDf[formatedDf['is_cleansheet'] == 1]
-    mygrid3[1][1].dataframe(filterdf[['Home team','Away team','Home player','Away player','fulltime score','winner']])
+    mygrid3[1][1].dataframe(filterdf[['Home team','Away team','Home player','Away player','fulltime score','winner','Date']])
 
 
     fig3, fig4 = getGoalsPieAndTrend(grpGoals)
@@ -192,14 +208,16 @@ if __name__ == "__main__":
 
         selPlayerdf = allGoalsDf[allGoalsDf["Player"]==option]
 
-
-        st.dataframe(selPlayerdf)
+        # selPlayerdf['is_cleansheet'] = selPlayerdf.apply(lambda row: isCleanSheet(row['fulltime score']),
+        #                                axis=1)
+        # st.dataframe(selPlayerdf)
 
         statsDF = selPlayerdf.groupby(['stadium','Team',])\
             .agg(
                 {"Date":"count",
                 "GoalsScored":"sum",
                 "GoalsConceded":"sum",
+                #"is_cleansheet":"sum",
                 "Result":lambda x: list(x)}
                  )\
             .reset_index()\
@@ -207,8 +225,20 @@ if __name__ == "__main__":
                             "GoalsScored":"total_goals_scored",
                             "GoalsConceded":"Total Goals Conceded"})
 
+        mygrid3 = make_grid(2, 2)
+
+        mygrid3[0][0].header("Team selection")
+        mygrid3[1][0].plotly_chart(px.pie(statsDF[statsDF['stadium']=='Home'], values='total_games', names='Team',title='Home Teams'))
+        mygrid3[1][1].plotly_chart(px.pie(statsDF[statsDF['stadium'] == 'Away'], values='total_games', names='Team',title='Away Teams'))
+
+        bestmatch = formatedDf[formatedDf['winner']==option]
+        bestmatch['goal_diff'] = [abs(int(x[0])- int(x[1])) for x in bestmatch['fulltime score'].str.split("-")]\
 
 
+        bestmatch =  bestmatch.sort_values(by=['goal_diff'],
+                                                 ascending=[False])
+        st.header("Best Performace")
+        st.dataframe(bestmatch.iloc[0:3])
 
         statsDF["total_wins"] = statsDF['Result'].apply(lambda x: x.count("Won"))
         statsDF["total_tie"] = statsDF['Result'].apply(lambda x: x.count("Tie"))
